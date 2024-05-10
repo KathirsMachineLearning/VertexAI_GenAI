@@ -1,0 +1,8 @@
+gcp:
+  project_name: "ExploreGCP"
+  project_id: "exploregcp-422706"
+  credentials_path: "./credentials.json"
+  region_name: "us-central1"
+  gcs:
+    bucket_name: "testbucketmlops"    
+    location: "us-central1"    # Region where the bucket will be created

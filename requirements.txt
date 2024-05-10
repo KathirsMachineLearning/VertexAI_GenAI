@@ -1,1 +1,4 @@
+db-dtypes
+pandas-gbq
 google-cloud-storage
+google-cloud-bigquery

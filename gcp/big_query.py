@@ -65,19 +65,6 @@ class BigQueryHandler:
         table = self.client.get_table(table_ref)
         return self.client.list_rows(table).to_dataframe()
 
-    def write_dataframe_to_table(self, dataframe, dataset_id, table_id, if_exists='fail'):
-        """
-        Write pandas DataFrame to a BigQuery table.
-
-        :param dataframe: DataFrame to write.
-        :param dataset_id: ID of the dataset.
-        :param table_id: ID of the table to write to.
-        :param if_exists: Action to take if the table already exists ('fail', 'replace', 'append').
-        """
-        dataset_ref = self.client.dataset(dataset_id)
-        table_ref = dataset_ref.table(table_id)
-        dataframe.to_gbq(destination_table=table_ref, project_id=self.project_id, if_exists=if_exists)
-
     def add_columns_to_table(self, dataset_id, table_id, columns):
         """
         Add columns to an existing BigQuery table.

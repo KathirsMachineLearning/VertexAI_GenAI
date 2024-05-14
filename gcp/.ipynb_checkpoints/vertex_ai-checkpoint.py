@@ -31,7 +31,7 @@ class VertexAIHandler:
             vertexai.init(project=self.project_id, location=self.region)
         return aiplatform.gapic.PredictionServiceClient()
     
-    def predict_text_Generation_model(self, model_name, prompt, texts, max_output_tokens=300, temperature=0.9, top_k=40):
+    def predict_text_generation_models(self, model_name, prompt, texts, max_output_tokens=300, temperature=0.9, top_k=40):
         """
         Make sentiment prediction requests to the specified model in Vertex AI.
 

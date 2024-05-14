@@ -35,7 +35,7 @@ class App:
 
         vertex_ai_handler = VertexAIHandler(self.config['gcp']['project_id'], self.config['gcp']['region_name'], self.config['gcp']['credentials_path'])
         # Predict sentiment for each text.     
-        sentiments = vertex_ai_handler.predict(self.config['model']['model_name'], prompt, texts)
+        sentiments = vertex_ai_handler.predict_text_generation_models(self.config['model']['model_name'], prompt, texts)
 
         # Add the sentiments as a new column to the preprocessed data
         preprocessed_data['Sentiment'] = sentiments

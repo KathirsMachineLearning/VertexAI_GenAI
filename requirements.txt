@@ -6,3 +6,5 @@ google-cloud-storage
 google-cloud-texttospeech
 google-auth
 db-dtypes
+pyyaml
+futures

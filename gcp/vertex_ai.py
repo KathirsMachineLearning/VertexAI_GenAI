@@ -1,5 +1,6 @@
 from google.cloud import aiplatform
 from vertexai.language_models import TextGenerationModel
+import concurrent.futures
 import vertexai
 import os
 
@@ -43,15 +44,25 @@ class VertexAIHandler:
         :return: List of responses from the model.
         """
         # Load model
-        generation_model = TextGenerationModel.from_pretrained(model_name)        
-        responses = []
-        for text in texts:
+        generation_model = TextGenerationModel.from_pretrained(model_name)
+
+        # Define a function to predict text generation for a single prompt
+        def predict_single(text):
             response = generation_model.predict(
-                prompt= f"{prompt}: {text}",
+                prompt=f"{prompt}: {text}",
                 max_output_tokens=max_output_tokens,
                 temperature=temperature,
                 top_k=top_k,
             )
-            responses.append(response.text)
+            return response.text
+
+        # Use ThreadPoolExecutor for parallel execution
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            # Submit tasks for each text
+            futures = [executor.submit(predict_single, text) for text in texts]
+
+            # Retrieve results as they become available
+            responses = [future.result() for future in concurrent.futures.as_completed(futures)]
 
         return responses
+

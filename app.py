@@ -18,6 +18,8 @@ class App:
             self.config = yaml.safe_load(f)
 
     def run_predictions(self):  
+
+        print("Prediction Process has started successfully.")
         # Initialize data preprocessor
         data_preprocessor = DataPreprocessor()
         # Preprocess data
@@ -43,14 +45,19 @@ class App:
 
         # Save predictions to CSV
         post_processor.save_predictions_to_csv(preprocessed_data, self.config['model']['postprocessing']['output_path'])
+        print("Prediction Process has ended successfully.")
+
+    def run_data_engineering(self):
+        print("Data Engineering Process has started successfully.")
         
+
     def run(self, task):
         if task == 'predictions':
             self.run_predictions()
         # Add more elif conditions for other tasks
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Data Processing Pipeline")
+    parser = argparse.ArgumentParser(description="Use Case Pipeline")
     parser.add_argument("--task", type=str, choices=["predictions"], help="Specify the task to execute")
     args = parser.parse_args()
 

@@ -1,3 +1,4 @@
+import argparse
 import yaml
 
 from gcp.vertex_ai import VertexAIHandler
@@ -16,20 +17,17 @@ class App:
         with open(app_config_path) as f:
             self.config = yaml.safe_load(f)
 
-    def run(self):  
-
+    def run_predictions(self):  
         # Initialize data preprocessor
         data_preprocessor = DataPreprocessor()
         # Preprocess data
         preprocessed_data = data_preprocessor.preprocess_data(self.config['model']['preprocessing']['data_path'])
         texts = preprocessed_data['Text'].tolist()
 
-        
-
         prompt_engineering_text = PromptEngineer()
         prompt = prompt_engineering_text.prompt_engineering()
         print(prompt)
-        
+
         # Initialize an empty list to store sentiments
         sentiments = []
 
@@ -45,8 +43,17 @@ class App:
 
         # Save predictions to CSV
         post_processor.save_predictions_to_csv(preprocessed_data, self.config['model']['postprocessing']['output_path'])
+        
 
+    def run(self, task):
+        if task == 'predictions':
+            self.run_predictions()
+        # Add more elif conditions for other tasks
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Data Processing Pipeline")
+    parser.add_argument("--task", type=str, choices=["predictions"], help="Specify the task to execute")
+    args = parser.parse_args()
+
     app = App()
-    app.run()
+    app.run(args.task)

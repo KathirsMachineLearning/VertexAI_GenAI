@@ -12,6 +12,9 @@ model:
   postprocessing:
     output_path: ./model/data/final_predictions.csv
   output_bucket:
-    bucket_name: csa_prediction_output
+    bucket_name: csa_model_output
     bucket_output_path: output/final_predictions.csv
+  input_bucket:
+    bucket_name: csa_model_input
+    bucket_input_path: Reviews.csv
   

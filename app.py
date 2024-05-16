@@ -20,6 +20,10 @@ class App:
     def run_predictions(self):  
 
         print("Prediction Process has started successfully.")
+
+        gcs_handler = GCSHandler(self.config['gcp']['project_id'])
+        gcs_handler.download_file(self.config['model']['input_bucket']['bucket_name'], self.config['model']['input_bucket']['bucket_input_path'], self.config['model']['preprocessing']['data_path'])
+
         # Initialize data preprocessor
         data_preprocessor = DataPreprocessor()
         # Preprocess data
@@ -46,7 +50,7 @@ class App:
         # Save predictions to CSV
         post_processor.save_predictions_to_csv(preprocessed_data, self.config['model']['postprocessing']['output_path'])
         
-        gcs_handler = GCSHandler(self.config['gcp']['project_id'])
+        
         gcs_handler.upload_file(self.config['model']['postprocessing']['output_path'], self.config['model']['output_bucket']['bucket_name'],self.config['model']['output_bucket']['bucket_output_path'])
         
         print("Prediction Process has ended successfully.")
@@ -61,7 +65,7 @@ class App:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Use Case Pipeline")
-    parser.add_argument("--task", type=str, choices=["predictions"], help="Specify the task to execute")
+    parser.add_argument("--task", type=str, choices=["predictions"], default="predictions", help="Specify the task to execute")
     args = parser.parse_args()
 
     app = App()

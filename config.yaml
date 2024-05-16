@@ -8,9 +8,9 @@ gcp:
 model:
   model_name: text-bison@001
   preprocessing:
-      data_path: ./model/data/Reviews.csv
+      data_path: Reviews.csv
   postprocessing:
-    output_path: ./model/data/final_predictions.csv
+    output_path: final_predictions.csv
   output_bucket:
     bucket_name: csa_model_output
     bucket_output_path: output/final_predictions.csv

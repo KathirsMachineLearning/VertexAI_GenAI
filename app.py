@@ -33,7 +33,7 @@ class App:
         # Initialize an empty list to store sentiments
         sentiments = []
 
-        vertex_ai_handler = VertexAIHandler(self.config['gcp']['project_id'], self.config['gcp']['region_name'], self.config['gcp']['credentials_path'])
+        vertex_ai_handler = VertexAIHandler(self.config['gcp']['project_id'], self.config['gcp']['region_name'])
         # Predict sentiment for each text.     
         sentiments = vertex_ai_handler.predict_text_generation_models(self.config['model']['model_name'], prompt, texts)
 

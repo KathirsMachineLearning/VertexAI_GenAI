@@ -1,5 +1,6 @@
 pandas
 pandas-gbq
+google-cloud-functions
 google-cloud-dataflow
 google-cloud-aiplatform
 google-cloud-bigquery

@@ -50,7 +50,6 @@ class App:
     def run_data_engineering(self):
         print("Data Engineering Process has started successfully.")
         
-
     def run(self, task):
         if task == 'predictions':
             self.run_predictions()

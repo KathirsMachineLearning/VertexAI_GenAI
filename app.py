@@ -44,7 +44,6 @@ class App:
         # Save predictions to CSV
         post_processor.save_predictions_to_csv(preprocessed_data, self.config['model']['postprocessing']['output_path'])
         
-
     def run(self, task):
         if task == 'predictions':
             self.run_predictions()

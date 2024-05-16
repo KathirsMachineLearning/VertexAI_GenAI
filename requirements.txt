@@ -1,5 +1,6 @@
 pandas
 pandas-gbq
+functions-framework
 google-cloud-functions
 #google-cloud-dataflow
 google-cloud-aiplatform

@@ -2,7 +2,8 @@ gcp:
   project_name: "CustomerSentimentAnalysis"
   project_id: "fluid-dreamer-423211-s9"
   credentials_path: "./credentials.json"
-  region_name: "us-central1" 
+  region_name: "us-central1"
+  
 
 model:
   model_name: text-bison@001
@@ -10,3 +11,7 @@ model:
       data_path: ./model/data/Reviews.csv
   postprocessing:
     output_path: ./model/data/final_predictions.csv
+  output_bucket:
+    bucket_name: csa_prediction_output
+    bucket_output_path: output/final_predictions.csv
+  

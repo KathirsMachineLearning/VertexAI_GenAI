@@ -28,7 +28,7 @@ class App:
 
         prompt_engineering_text = PromptEngineer()
         prompt = prompt_engineering_text.prompt_engineering()
-        print(prompt)
+        print(f"prompt text: {prompt}")
 
         # Initialize an empty list to store sentiments
         sentiments = []
@@ -45,6 +45,10 @@ class App:
 
         # Save predictions to CSV
         post_processor.save_predictions_to_csv(preprocessed_data, self.config['model']['postprocessing']['output_path'])
+        
+        gcs_handler = GCSHandler(self.config['gcp']['project_id'])
+        gcs_handler.upload_file(self.config['model']['postprocessing']['output_path'], self.config['model']['output_bucket']['bucket_name'],self.config['model']['output_bucket']['bucket_output_path'])
+        
         print("Prediction Process has ended successfully.")
 
     def run_data_engineering(self):

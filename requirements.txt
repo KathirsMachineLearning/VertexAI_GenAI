@@ -1,8 +1,8 @@
+apache-beam[gcp]
 pandas
-pandas-gbq
+#pandas-gbq
 functions-framework
 google-cloud-functions
-google-cloud-dataflow
 google-cloud-aiplatform
 google-cloud-bigquery
 google-cloud-storage
@@ -10,14 +10,13 @@ google-cloud-texttospeech
 google-auth
 db-dtypes
 pyyaml
-futures
-google-cloud-storage
-google-cloud-dataflow-client
-google-auth
-google-auth-httplib2
-google-api-python-client
-protobuf
-jsons
-time
-apache-beam[gcp]
+#futures
+# google-cloud-dataflow-client
+# google-auth
+# google-auth-httplib2
+# google-api-python-client
+# protobuf
+# jsons
+# time
+
 

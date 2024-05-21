@@ -1,19 +1,17 @@
-FROM python:3.9
+# Use an official Python runtime as the base image
+FROM python:3.8
 
-# Set the working directory
+# Set the working directory in the container to /app
 WORKDIR /app
 
-# Copy the requirements file to the container
-COPY requirements.txt .
+# Copy the current directory contents into the container at /app
+ADD . /app
 
-# Install the requirements
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the source code to the container
-COPY . .
+# Make port 80 available to the world outside this container
+EXPOSE 80
 
-# Expose the port 5000
-EXPOSE 5000
-
-# Set the entry point for the container
-CMD [ "sh", "-c", "python ./app.py" ]
+# Run app.py when the container launches
+CMD ["python", "app.py"]

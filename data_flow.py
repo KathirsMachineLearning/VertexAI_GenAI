@@ -1,6 +1,5 @@
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
-from apache_beam.runners.dataflow.options.pipeline_options import SetupOptions
 import subprocess
 
 project_id = "exploregcp-422706"
@@ -17,31 +16,23 @@ options = PipelineOptions(
     job_name=job_name,
     temp_location=temp_location,
     staging_location=staging_location,
-    region=region
+    region=region,
+    sdk_container_image=docker_image,
 )
-
-# Set the SDK container image
-setup_options = options.view_as(SetupOptions)
-setup_options.sdk_container_image = docker_image
 
 # Create your pipeline using the options
 p = beam.Pipeline(options=options)
 
-# Define a simple DoFn that runs the command to execute app.py
-class RunApp(beam.DoFn):
+# Define a simple DoFn that prints the input element and runs the command
+class RunCommandAndPrintElement(beam.DoFn):
     def process(self, element):
-        # This will run app.py within the Docker container
-        result = subprocess.run(['python', 'app.py'], capture_output=True, text=True)
-        if result.returncode != 0:
-            print(f"Error executing app.py: {result.stderr}")
-        else:
-            print(f"app.py output: {result.stdout}")
-        yield element
+        print(element)
+        subprocess.run(['python3', 'app.py', '--task=predictions'], check=True)
 
 # Define your pipeline
-(p 
- | "Create data" >> beam.Create([1])  # This is your input data
- | "Run app.py" >> beam.ParDo(RunApp())  # This DoFn will run the app.py script
+(p
+ | "Create data" >> beam.Create([1, 2, 3, 4, 5])  # This is your input data
+ | "Run command and print data" >> beam.ParDo(RunCommandAndPrintElement())  # This DoFn will run the command and print each element of the input data
 )
 
 # Run the pipeline

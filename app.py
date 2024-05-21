@@ -21,7 +21,7 @@ class App:
 
         print("Prediction Process has started successfully.")
 
-        gcs_handler = GCSHandler(self.config['gcp']['project_id'])
+        gcs_handler = GCSHandler(self.config['gcp']['project_id'], "./credentials.json")
         gcs_handler.download_file(self.config['model']['input_bucket']['bucket_name'], self.config['model']['input_bucket']['bucket_input_path'], self.config['model']['preprocessing']['data_path'])
 
         # Initialize data preprocessor
@@ -37,7 +37,7 @@ class App:
         # Initialize an empty list to store sentiments
         sentiments = []
 
-        vertex_ai_handler = VertexAIHandler(self.config['gcp']['project_id'], self.config['gcp']['region_name'])
+        vertex_ai_handler = VertexAIHandler(self.config['gcp']['project_id'], self.config['gcp']['region_name'], "./credentials.json")
         # Predict sentiment for each text.     
         sentiments = vertex_ai_handler.predict_text_generation_models(self.config['model']['model_name'], prompt, texts)
 

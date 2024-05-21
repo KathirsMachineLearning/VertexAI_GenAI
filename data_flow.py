@@ -1,7 +1,9 @@
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
+import os
 import subprocess
 
+# Define the GCP project settings
 project_id = "exploregcp-422706"
 region = "us-central1"
 staging_location = "gs://testdataflows/staging"
@@ -20,19 +22,30 @@ options = PipelineOptions(
     sdk_container_image=docker_image,
 )
 
+# Define a simple method to list files and folders
+def list_files_and_folders():
+    current_directory = os.getcwd()
+    items = os.listdir(current_directory)
+    return items
+
+# Define a custom DoFn to call the list_files_and_folders function
+class ListFilesAndFoldersDoFn(beam.DoFn):
+    def process(self, element):
+        # List files and folders
+        items = list_files_and_folders()
+        # Print each item
+        for item in items:
+            print(item)
+        # Yield the element for further processing if needed
+        yield element
+
 # Create your pipeline using the options
 p = beam.Pipeline(options=options)
 
-# Define a simple DoFn that prints the input element and runs the command
-class RunCommandAndPrintElement(beam.DoFn):
-    def process(self, element):
-        print(element)
-        subprocess.run(['python3', 'app.py', '--task=predictions'], check=True)
-
 # Define your pipeline
-(p
- | "Create data" >> beam.Create([1, 2, 3, 4, 5])  # This is your input data
- | "Run command and print data" >> beam.ParDo(RunCommandAndPrintElement())  # This DoFn will run the command and print each element of the input data
+(p 
+ | "Create data" >> beam.Create([1])  # This creates a single element to trigger the DoFn
+ | "List files and folders" >> beam.ParDo(ListFilesAndFoldersDoFn())  # This DoFn will list files and folders
 )
 
 # Run the pipeline

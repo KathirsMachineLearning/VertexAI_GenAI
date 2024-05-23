@@ -10,3 +10,6 @@ gcloud config set project exploregcp-422706
 gcloud auth configure-docker
 docker build -t gcr.io/exploregcp-422706/csa .
 docker push gcr.io/exploregcp-422706/csa
+
+
+python model_dataflow.py --region us-central1 --runner DataflowRunner --project exploregcp-422706 --sdk_container_image gcr.io/exploregcp-422706/csa --sdk_location=container

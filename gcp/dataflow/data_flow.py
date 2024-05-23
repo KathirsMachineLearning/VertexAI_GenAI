@@ -14,7 +14,7 @@ docker_image = 'gcr.io/exploregcp-422706/csa'
 # Create pipeline options
 options = PipelineOptions(
     project=project_id,
-    runner="DirectRunner",
+    runner="DataflowRunner",
     job_name=job_name,
     temp_location=temp_location,
     staging_location=staging_location,

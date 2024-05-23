@@ -14,7 +14,7 @@ docker_image = 'gcr.io/exploregcp-422706/csa'
 # Create pipeline options
 options = PipelineOptions(
     project=project_id,
-    runner="DataflowRunner",
+    runner="DirectRunner",
     job_name=job_name,
     temp_location=temp_location,
     staging_location=staging_location,
@@ -22,17 +22,14 @@ options = PipelineOptions(
     sdk_container_image=docker_image,
 )
 
-# Define a simple method to list files and folders
-def list_files_and_folders():
-    current_directory = os.getcwd()
-    items = os.listdir(current_directory)
-    return items
-
-# Define a custom DoFn to call the list_files_and_folders function
+    
+#Define a custom DoFn to call the list_files_and_folders function
 class ListFilesAndFoldersDoFn(beam.DoFn):
+
     def process(self, element):
         # List files and folders
-        items = list_files_and_folders()
+        current_directory = os.getcwd()
+        items = os.listdir(current_directory)
         # Print each item
         for item in items:
             print(item)
